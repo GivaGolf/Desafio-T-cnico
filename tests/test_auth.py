@@ -1,5 +1,6 @@
 import sys
 import os
+import uuid
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -9,51 +10,37 @@ from main import app
 client = TestClient(app)
 
 
-def get_token():
+def test_register():
+    email_unico = f"{uuid.uuid4()}@email.com"
+
+    response = client.post("/auth/register", json={
+        "email": email_unico,
+        "password": "123456"
+    })
+
+    print("REGISTER:", response.json())
+
+    assert response.status_code == 200
+
+
+def test_login():
+    email_unico = f"{uuid.uuid4()}@email.com"
+
     client.post("/auth/register", json={
-        "email": "teste@teste.com",
+        "email": email_unico,
         "password": "123456"
     })
 
     response = client.post("/auth/login", json={
-        "email": "teste@teste.com",
+        "email": email_unico,
         "password": "123456"
     })
 
-    print("LOGIN RESPONSE:", response.json())
-
-    return response.json()["data"]["access_token"]
-
-
-def test_criar_cliente():
-    token = get_token()
-
-    response = client.post(
-        "/clientes",
-        json={
-            "nome": "João",
-            "email": "joao@email.com",
-            "telefone": "999999999"
-        },
-        headers={"Authorization": f"Bearer {token}"}
-    )
-
-    print("CREATE RESPONSE:", response.json())
+    print("LOGIN:", response.json())
 
     assert response.status_code == 200
+    assert "access_token" in response.json()["data"]
 
-
-def test_listar_clientes():
-    token = get_token()
-
-    response = client.get(
-        "/clientes",
-        headers={"Authorization": f"Bearer {token}"}
-    )
-
-    print("LIST RESPONSE:", response.json())
-
-    assert response.status_code == 200
 
 def test_login_invalido():
     response = client.post("/auth/login", json={
@@ -63,8 +50,25 @@ def test_login_invalido():
 
     assert response.status_code == 401
 
+
+def get_token():
+    email_unico = f"{uuid.uuid4()}@email.com"
+
+    client.post("/auth/register", json={
+        "email": email_unico,
+        "password": "123456"
+    })
+
+    response = client.post("/auth/login", json={
+        "email": email_unico,
+        "password": "123456"
+    })
+
+    return response.json()["data"]["access_token"]
+
+
 def test_rota_protegida():
-    token = get_token()   # ✅ tem espaço antes
+    token = get_token()
 
     response = client.get(
         "/protegido",
@@ -81,30 +85,3 @@ def test_token_invalido():
     )
 
     assert response.status_code == 401
-
-
-def test_atualizar_cliente_inexistente():
-    token = get_token()
-
-    response = client.put(
-        "/clientes/999",
-        json={
-            "nome": "X",
-            "email": "x@email.com",
-            "telefone": "000"
-        },
-        headers={"Authorization": f"Bearer {token}"}
-    )
-
-    assert response.status_code == 404
-
-
-def test_deletar_cliente_inexistente():
-    token = get_token()
-
-    response = client.delete(
-        "/clientes/999",
-        headers={"Authorization": f"Bearer {token}"}
-    )
-
-    assert response.status_code == 404

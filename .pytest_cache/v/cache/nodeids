@@ -1,0 +1,18 @@
+[
+  "tests/test_auth.py::test_atualizar_cliente_inexistente",
+  "tests/test_auth.py::test_criar_cliente",
+  "tests/test_auth.py::test_deletar_cliente_inexistente",
+  "tests/test_auth.py::test_listar_clientes",
+  "tests/test_auth.py::test_login",
+  "tests/test_auth.py::test_login_invalido",
+  "tests/test_auth.py::test_register",
+  "tests/test_auth.py::test_rota_protegida",
+  "tests/test_auth.py::test_token_invalido",
+  "tests/test_clientes.py::test_atualizar_cliente",
+  "tests/test_clientes.py::test_atualizar_cliente_inexistente",
+  "tests/test_clientes.py::test_buscar_cliente",
+  "tests/test_clientes.py::test_criar_cliente",
+  "tests/test_clientes.py::test_deletar_cliente",
+  "tests/test_clientes.py::test_deletar_cliente_inexistente",
+  "tests/test_clientes.py::test_listar_clientes"
+]
