@@ -23,21 +23,70 @@ function Login({ setToken }) {
   }
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+      background: "linear-gradient(135deg, #667eea, #764ba2)"
+    }}>
+      <div style={{
+        background: "rgba(255, 255, 255, 0.95)",
+        padding: "30px",
+        borderRadius: "10px",
+        boxShadow: "0 0 15px rgba(0,0,0,0.2)",
+        width: "300px",
+        textAlign: "center"
+      }}>
 
-      <input
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <h2 style={{ marginBottom: "20px" }}>
+          Login
+        </h2>
 
-      <input
-        type="password"
-        placeholder="Senha"
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "10px",
+            borderRadius: "5px",
+            border: "1px solid #ccc"
+          }}
+        />
 
-      <button onClick={handleLogin}>Entrar</button>
+        <input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "15px",
+            borderRadius: "5px",
+            border: "1px solid #ccc"
+          }}
+        />
+
+        <button
+          onClick={handleLogin}
+          style={{
+            width: "100%",
+            padding: "10px",
+            background: "#4CAF50",
+            color: "#fff",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontWeight: "bold"
+          }}
+        >
+          Entrar
+        </button>
+      </div>
     </div>
   )
 }
